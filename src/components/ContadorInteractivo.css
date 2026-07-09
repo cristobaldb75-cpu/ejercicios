@@ -1,0 +1,116 @@
+/* Estilos para ContadorInteractivo
+   - Interfaz tipo tarjeta
+   - Número grande y centrado
+   - Botones distribuidos y con apariencia moderna
+*/
+
+.contador-card {
+  max-width: 420px;
+  margin: 24px auto;
+  padding: 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9fb 100%);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(20, 40, 60, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+.contador-titulo {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #334155;
+  font-weight: 600;
+}
+
+.contador-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 10px 20px;
+  border-radius: 8px;
+  min-width: 160px;
+  text-align: center;
+  transition: color 160ms ease, transform 120ms ease;
+}
+
+.controls-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  color: white;
+  box-shadow: 0 6px 18px rgba(99,102,241,0.18);
+}
+
+.btn-secondary {
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.btn-reset {
+  background: transparent;
+  color: #334155;
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.color-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.color-button {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.color-button:hover {
+  transform: translateY(-2px);
+}
+
+.color-button.active {
+  box-shadow: 0 6px 18px rgba(16,24,40,0.12);
+  border-color: rgba(0,0,0,0.12);
+}
+
+.nota {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* Hacer la tarjeta responsiva */
+@media (max-width: 420px) {
+  .contador-card { padding: 16px; }
+  .contador-number { font-size: 2.6rem; min-width: 120px; }
+}
