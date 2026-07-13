@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro - Ejercicios Semana 7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #root {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
+            grid-column: 1 / -1;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .form-section h2,
+        .display-section h2 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background-color: #f8f9ff;
+        }
+
+        .buttons-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            grid-column: 1 / -1;
+        }
+
+        .btn-clear {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .display-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .user-card.empty {
+            background: #f0f0f0;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .user-info {
+            margin-bottom: 15px;
+        }
+
+        .user-info-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .user-info-value {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .registered-users {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .registered-users h3 {
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .users-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .user-item {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 12px;
+            border-radius: 8px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .user-item-field {
+            font-size: 13px;
+        }
+
+        .user-item-label {
+            color: #999;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .user-item-value {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .empty-list {
+            text-align: center;
+            color: #999;
+            padding: 30px 10px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .user-item {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                gap: 20px;
+            }
+
+            input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .user-card {
+                padding: 20px;
+                min-height: 150px;
+            }
+
+            .user-info-value {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function FormularioRegistro() {
+            const [nombre, setNombre] = useState('');
+            const [email, setEmail] = useState('');
+            const [edad, setEdad] = useState('');
+            const [usuarios, setUsuarios] = useState([]);
+            const [usuarioActual, setUsuarioActual] = useState(null);
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+
+                if (nombre.trim() === '' || email.trim() === '' || edad.trim() === '') {
+                    alert('Por favor completa todos los campos');
+                    return;
+                }
+
+                if (isNaN(edad) || edad < 1 || edad > 120) {
+                    alert('Por favor ingresa una edad válida (1-120)');
+                    return;
+                }
+
+                const nuevoUsuario = {
+                    id: Date.now(),
+                    nombre: nombre.trim(),
+                    email: email.trim(),
+                    edad: parseInt(edad)
+                };
+
+                setUsuarios([nuevoUsuario, ...usuarios]);
+                setUsuarioActual(nuevoUsuario);
+                limpiarFormulario();
+            };
+
+            const limpiarFormulario = () => {
+                setNombre('');
+                setEmail('');
+                setEdad('');
+            };
+
+            const handleLimpiar = () => {
+                limpiarFormulario();
+                setUsuarioActual(null);
+            };
+
+            return (
+                <div className="container">
+                    <h1>📝 Formulario de Registro</h1>
+                    <p className="subtitle">Ingresa tus datos personales y visualiza el registro</p>
+
+                    {/* Sección del Formulario */}
+                    <div className="form-section">
+                        <h2>Datos Personales</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="nombre">Nombre Completo</label>
+                                <input
+                                    id="nombre"
+                                    type="text"
+                                    placeholder="Ej: Juan García López"
+                                    value={nombre}
+                                    onChange={(e) => setNombre(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    placeholder="Ej: juan@example.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="edad">Edad</label>
+                                <input
+                                    id="edad"
+                                    type="number"
+                                    placeholder="Ej: 25"
+                                    value={edad}
+                                    onChange={(e) => setEdad(e.target.value)}
+                                    min="1"
+                                    max="120"
+                                />
+                            </div>
+
+                            <div className="buttons-group">
+                                <button type="submit" className="btn-submit">
+                                    ✅ Registrar
+                                </button>
+                                <button type="button" className="btn-clear" onClick={handleLimpiar}>
+                                    🗑️ Limpiar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    {/* Sección de Visualización */}
+                    <div className="display-section">
+                        <h2>Registro Actual</h2>
+
+                        {usuarioActual ? (
+                            <div className="user-card">
+                                <div className="user-info">
+                                    <div className="user-info-label">👤 Nombre</div>
+                                    <div className="user-info-value">{usuarioActual.nombre}</div>
+                                </div>
+                                <div className="user-info">
+                                    <div className="user-info-label">📧 Email</div>
+                                    <div className="user-info-value">{usuarioActual.email}</div>
+                                </div>
+                                <div className="user-info">
+                                    <div className="user-info-label">🎂 Edad</div>
+                                    <div className="user-info-value">{usuarioActual.edad} años</div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="user-card empty">
+                                Completa el formulario para ver los datos registrados
+                            </div>
+                        )}
+
+                        <div className="registered-users">
+                            <h3>📊 Historial de Registros ({usuarios.length})</h3>
+                            {usuarios.length > 0 ? (
+                                <div className="users-list">
+                                    {usuarios.map((usuario) => (
+                                        <div key={usuario.id} className="user-item">
+                                            <div className="user-item-field">
+                                                <div className="user-item-label">Nombre</div>
+                                                <div className="user-item-value">{usuario.nombre}</div>
+                                            </div>
+                                            <div className="user-item-field">
+                                                <div className="user-item-label">Email</div>
+                                                <div className="user-item-value">{usuario.email}</div>
+                                            </div>
+                                            <div className="user-item-field">
+                                                <div className="user-item-label">Edad</div>
+                                                <div className="user-item-value">{usuario.edad} años</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="empty-list">
+                                    No hay registros aún. ¡Sé el primero en registrarte!
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<FormularioRegistro />);
+    </script>
+</body>
+</html>
