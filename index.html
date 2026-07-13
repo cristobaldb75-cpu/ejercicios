@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador Interactivo - Ejercicios Semana 7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #root {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .counter-display {
+            font-size: 64px;
+            font-weight: bold;
+            margin: 30px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .buttons-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-decrease {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .btn-increase {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            grid-column: 1 / -1;
+        }
+
+        .color-controls {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .color-controls h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .color-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .color-btn {
+            width: 100%;
+            padding: 12px 8px;
+            border: 3px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .color-btn.active {
+            border-color: #333;
+            box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.2);
+        }
+
+        .red {
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+
+        .blue {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .green {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .purple {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .orange {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .pink {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+        }
+
+        .teal {
+            background: linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%);
+        }
+
+        .indigo {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .counter-display {
+                font-size: 48px;
+            }
+
+            button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function ContadorInteractivo() {
+            const [contador, setContador] = useState(0);
+            const [color, setColor] = useState('blue');
+
+            const colores = [
+                { nombre: 'Rojo', clase: 'red', valor: 'red' },
+                { nombre: 'Azul', clase: 'blue', valor: 'blue' },
+                { nombre: 'Verde', clase: 'green', valor: 'green' },
+                { nombre: 'Morado', clase: 'purple', valor: 'purple' },
+                { nombre: 'Naranja', clase: 'orange', valor: 'orange' },
+                { nombre: 'Rosa', clase: 'pink', valor: 'pink' },
+                { nombre: 'Turquesa', clase: 'teal', valor: 'teal' },
+                { nombre: 'Índigo', clase: 'indigo', valor: 'indigo' },
+            ];
+
+            const disminuir = () => setContador(contador - 1);
+            const aumentar = () => setContador(contador + 1);
+            const reiniciar = () => setContador(0);
+
+            return (
+                <div className="container">
+                    <h1>📊 Contador Interactivo</h1>
+
+                    <div className={`counter-display ${color}`} style={{
+                        color: color === 'orange' || color === 'teal' ? '#333' : 'white',
+                    }}>
+                        {contador}
+                    </div>
+
+                    <div className="buttons-group">
+                        <button className="btn-decrease" onClick={disminuir}>
+                            ➖ Decrementar
+                        </button>
+                        <button className="btn-increase" onClick={aumentar}>
+                            ➕ Incrementar
+                        </button>
+                        <button className="btn-reset" onClick={reiniciar}>
+                            🔄 Reiniciar
+                        </button>
+                    </div>
+
+                    <div className="color-controls">
+                        <h3>🎨 Cambiar Color</h3>
+                        <div className="color-buttons">
+                            {colores.map((col) => (
+                                <button
+                                    key={col.valor}
+                                    className={`color-btn ${col.clase} ${color === col.valor ? 'active' : ''}`}
+                                    onClick={() => setColor(col.valor)}
+                                    title={col.nombre}
+                                >
+                                    {col.nombre}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<ContadorInteractivo />);
+    </script>
+</body>
+</html>
